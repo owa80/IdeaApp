@@ -1,0 +1,47 @@
+name: Compilar APK
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Compilar
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
+
+      - name: Preparar APK
+        run: cp app/build/outputs/apk/debug/app-debug.apk IdeApp.apk
+
+      - name: Subir APK como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: IdeApp-apk
+          path: IdeApp.apk
+
+      - name: Publicar versión descargable
+        if: github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: IdeApp 1.0.${{ github.run_number }}
+          body: Descarga IdeApp.apk desde el móvil e instálalo.
+          files: IdeApp.apk
+          make_latest: true
