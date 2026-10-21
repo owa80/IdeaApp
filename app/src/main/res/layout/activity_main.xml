@@ -55,7 +55,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="4dp"
-        android:text="Últimas ideas"
+        android:text="Últimas ideas (mantén pulsada una para mover o eliminar)"
         android:textAppearance="?attr/textAppearanceSubtitle1" />
 
     <ListView

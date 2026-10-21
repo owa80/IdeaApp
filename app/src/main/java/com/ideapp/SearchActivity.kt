@@ -37,6 +37,11 @@ class SearchActivity : AppCompatActivity() {
             startActivity(ItemActivity.editIntent(this, adapter.getItem(position).id))
         }
 
+        list.setOnItemLongClickListener { _, _, position, _ ->
+            ItemActions.show(this, repo, adapter.getItem(position)) { runSearch() }
+            true
+        }
+
         loadFilter(intent.getLongExtra(EXTRA_CATEGORY_ID, 0))
 
         query.addTextChangedListener(object : TextWatcher {

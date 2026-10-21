@@ -35,10 +35,18 @@ class MainActivity : AppCompatActivity() {
         list.setOnItemClickListener { _, _, position, _ ->
             startActivity(ItemActivity.editIntent(this, adapter.getItem(position).id))
         }
+        list.setOnItemLongClickListener { _, _, position, _ ->
+            ItemActions.show(this, repo, adapter.getItem(position)) { refresh() }
+            true
+        }
     }
 
     override fun onResume() {
         super.onResume()
+        refresh()
+    }
+
+    private fun refresh() {
         adapter.items = repo.recent(30)
         val isEmpty = adapter.items.isEmpty()
         list.visibility = if (isEmpty) View.GONE else View.VISIBLE
