@@ -22,7 +22,7 @@ class ItemAdapter : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(parent.context).inflate(R.layout.row_item, parent, false)
         val item = items[position]
-        view.findViewById<TextView>(R.id.tv_title).text = "${item.type.emoji} ${item.name}"
+        view.findViewById<TextView>(R.id.tv_title).text = "${item.summary.ifEmpty { "💡" }} ${item.name}"
         view.findViewById<TextView>(R.id.tv_subtitle).text =
             "${item.categoryLabel} · ${Media.formatDate(item.updatedAt)}"
         return view

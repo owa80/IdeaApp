@@ -6,9 +6,11 @@ texto, audio o foto, organizadas en categorías y subcategorías.
 ## Funciones
 
 - Pantalla principal con accesos rápidos: Nueva idea (Escribir / Audio / Foto), Buscar y Categorías.
-- Cada ítem tiene un nombre y pertenece a una sola categoría o subcategoría.
+- Cada idea tiene un nombre, pertenece a una sola categoría o subcategoría y puede contener varios elementos de cualquier tipo: texto, audio, foto y vídeo.
+- Dentro de una idea se pueden añadir, borrar y mover elementos a otra idea.
+- Mantén pulsada una idea en las listas para moverla a otra categoría o eliminarla.
 - Crear, renombrar y eliminar categorías y subcategorías (no se elimina una que tenga ítems).
-- Buscar por nombre del ítem, de su categoría o subcategoría, o por texto.
+- Buscar por nombre del ítem, de su categoría o subcategoría, o por el texto de sus elementos.
 
 ## Obtener el .apk sin Android Studio
 

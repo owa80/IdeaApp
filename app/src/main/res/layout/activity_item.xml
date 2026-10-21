@@ -10,13 +10,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tv_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textAppearance="?attr/textAppearanceSubtitle1" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_name"
             android:layout_width="match_parent"
@@ -58,103 +51,97 @@
                 android:textAllCaps="false" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/section_audio"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Elementos de la idea"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+        <TextView
+            android:id="@+id/tv_no_entries"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tv_audio_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="?attr/textAppearanceBody1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_record"
-                    android:layout_width="0dp"
-                    android:layout_height="64dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:id="@+id/btn_play"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="64dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:textAllCaps="false" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="Todavía no hay nada. Añade texto, audio, fotos o vídeos con los botones de abajo."
+            android:textAppearance="?attr/textAppearanceCaption" />
 
         <LinearLayout
-            android:id="@+id/section_photo"
+            android:id="@+id/entries_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_marginTop="8dp"
+            android:orientation="vertical" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Añadir a esta idea"
+            android:textAppearance="?attr/textAppearanceSubtitle2" />
 
-                <Button
-                    android:id="@+id/btn_take_photo"
-                    android:layout_width="0dp"
-                    android:layout_height="64dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:textAllCaps="false" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_pick_photo"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="64dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:text="🖼 Galería"
-                    android:textAllCaps="false" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/btn_add_text"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:padding="0dp"
+                android:text="📝\nTexto"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
 
-            <ImageView
-                android:id="@+id/iv_photo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="Foto"
-                android:maxHeight="420dp"
-                android:scaleType="fitCenter"
-                android:visibility="gone" />
+            <Button
+                android:id="@+id/btn_add_audio"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:padding="0dp"
+                android:text="🎤\nAudio"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_add_photo"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:padding="0dp"
+                android:text="📷\nFoto"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_add_video"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:padding="0dp"
+                android:text="🎬\nVídeo"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
         </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top|start"
-                android:inputType="textMultiLine|textCapSentences"
-                android:minLines="3" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_dates"

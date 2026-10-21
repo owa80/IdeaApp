@@ -39,6 +39,11 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_new_video"
+            style="@style/QuickButton"
+            android:text="🎬\nVídeo" />
+
+        <Button
             android:id="@+id/btn_search"
             style="@style/QuickButton"
             android:text="🔍\nBuscar" />
