@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_new_text).setOnClickListener { openNew(ItemType.TEXTO) }
         findViewById<Button>(R.id.btn_new_audio).setOnClickListener { openNew(ItemType.AUDIO) }
         findViewById<Button>(R.id.btn_new_photo).setOnClickListener { openNew(ItemType.FOTO) }
+        findViewById<Button>(R.id.btn_new_video).setOnClickListener { openNew(ItemType.VIDEO) }
         findViewById<Button>(R.id.btn_search).setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
         }
