@@ -94,16 +94,32 @@ class Repo(context: Context) {
 
     fun topCategories(): List<Category> = categories().filter { it.parentId == null }
 
-    /** Categorías principales seguidas de sus subcategorías, en orden alfabético. */
+    /**
+     * Todas las categorías en forma de árbol, sin límite de niveles: cada una va seguida de sus
+     * subcategorías, en orden alfabético. La etiqueta lleva la ruta completa ("A › B › C").
+     */
     fun categoryOptions(): List<CategoryOption> {
-        val all = categories()
+        val byParent = categories().groupBy { it.parentId }
         val result = mutableListOf<CategoryOption>()
-        for (top in all.filter { it.parentId == null }) {
-            result += CategoryOption(top.id, top.name, top.name, null)
-            for (sub in all.filter { it.parentId == top.id }) {
-                result += CategoryOption(sub.id, "${top.name} › ${sub.name}", sub.name, top.id)
+        fun walk(parentId: Long?, path: String, depth: Int) {
+            for (cat in byParent[parentId].orEmpty()) {
+                val label = if (path.isEmpty()) cat.name else "$path › ${cat.name}"
+                result += CategoryOption(cat.id, label, cat.name, parentId, depth)
+                walk(cat.id, label, depth + 1)
             }
         }
+        walk(null, "", 0)
+        return result
+    }
+
+    /** Ids de una categoría y de todas las que cuelgan de ella, a cualquier profundidad. */
+    private fun withDescendants(ids: Collection<Long>): Set<Long> {
+        val byParent = categories().groupBy { it.parentId }
+        val result = mutableSetOf<Long>()
+        fun walk(id: Long) {
+            if (result.add(id)) byParent[id].orEmpty().forEach { walk(it.id) }
+        }
+        ids.forEach { walk(it) }
         return result
     }
 
@@ -177,14 +193,15 @@ class Repo(context: Context) {
         val args = mutableListOf<String>()
         val query = text.trim()
         if (query.isNotEmpty()) {
-            where += "(i.name LIKE ? OR c.name LIKE ? OR p.name LIKE ? OR " +
+            // También coincide si el nombre está en la categoría de la idea o en cualquiera de sus ancestras.
+            val matching = withDescendants(categories().filter { it.name.contains(query, ignoreCase = true) }.map { it.id })
+            val byCategory = if (matching.isEmpty()) "" else "i.category_id IN (${matching.joinToString(",")}) OR "
+            where += "(i.name LIKE ? OR $byCategory" +
                 "EXISTS (SELECT 1 FROM entries e WHERE e.item_id = i.id AND e.content LIKE ?))"
-            repeat(4) { args += "%$query%" }
+            repeat(2) { args += "%$query%" }
         }
         if (categoryId != null) {
-            where += "(c.id = ? OR c.parent_id = ?)"
-            args += categoryId.toString()
-            args += categoryId.toString()
+            where += "i.category_id IN (${withDescendants(listOf(categoryId)).joinToString(",")})"
         }
         val whereSql = if (where.isEmpty()) "" else " WHERE " + where.joinToString(" AND ")
         return readItems("$ITEM_SELECT$whereSql ORDER BY i.updated_at DESC", args.toTypedArray())
@@ -200,17 +217,16 @@ class Repo(context: Context) {
 
     private fun readItems(sql: String, args: Array<String>): List<Item> {
         val list = mutableListOf<Item>()
+        val labels = categoryOptions().associate { it.id to it.label }
         db.rawQuery(sql, args).use { c ->
             while (c.moveToNext()) {
-                val catName = c.getString(5)
-                val parentName = if (c.isNull(6)) null else c.getString(6)
                 list += Item(
                     id = c.getLong(0),
                     name = c.getString(1),
                     categoryId = c.getLong(2),
                     createdAt = c.getLong(3),
                     updatedAt = c.getLong(4),
-                    categoryLabel = if (parentName == null) catName else "$parentName › $catName",
+                    categoryLabel = labels[c.getLong(2)] ?: "",
                 )
             }
         }
@@ -293,8 +309,7 @@ class Repo(context: Context) {
 
     private companion object {
         const val ITEM_SELECT =
-            "SELECT i.id, i.name, i.category_id, i.created_at, i.updated_at, c.name, p.name " +
-                "FROM items i JOIN categories c ON c.id = i.category_id " +
-                "LEFT JOIN categories p ON p.id = c.parent_id"
+            "SELECT i.id, i.name, i.category_id, i.created_at, i.updated_at " +
+                "FROM items i JOIN categories c ON c.id = i.category_id"
     }
 }

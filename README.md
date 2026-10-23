@@ -9,7 +9,7 @@ texto, audio o foto, organizadas en categorías y subcategorías.
 - Cada idea tiene un nombre, pertenece a una sola categoría o subcategoría y puede contener varios elementos de cualquier tipo: texto, audio, foto y vídeo.
 - Dentro de una idea se pueden añadir, borrar y mover elementos a otra idea.
 - Mantén pulsada una idea en las listas para moverla a otra categoría o eliminarla.
-- Crear, renombrar y eliminar categorías y subcategorías (no se elimina una que tenga ítems).
+- Crear, renombrar y eliminar categorías con subcategorías a cualquier profundidad (no se elimina una que tenga ideas o subcategorías).
 - Buscar por nombre del ítem, de su categoría o subcategoría, o por el texto de sus elementos.
 
 ## Obtener el .apk sin Android Studio
