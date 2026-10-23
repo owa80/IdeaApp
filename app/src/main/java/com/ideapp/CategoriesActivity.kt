@@ -40,8 +40,8 @@ class CategoriesActivity : AppCompatActivity() {
         val rows = options.map { option ->
             val n = repo.itemCount(option.id)
             val countText = if (n == 1) "1 ítem" else "$n ítems"
-            if (option.parentId == null) "📁 ${option.name}  ($countText)"
-            else "        └ ${option.name}  ($countText)"
+            if (option.depth == 0) "📁 ${option.name}  ($countText)"
+            else "${"      ".repeat(option.depth)}└ ${option.name}  ($countText)"
         }
         list.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, rows)
     }
@@ -49,10 +49,8 @@ class CategoriesActivity : AppCompatActivity() {
     private fun showActions(option: CategoryOption) {
         val actions = mutableListOf<Pair<String, () -> Unit>>()
         actions += "Ver sus ítems" to { startActivity(SearchActivity.intent(this, option.id)) }
-        if (option.parentId == null) {
-            actions += "Añadir subcategoría" to {
-                CategoryDialogs.create(this, repo, parentId = option.id, askParent = false) { refresh() }
-            }
+        actions += "Añadir subcategoría" to {
+            CategoryDialogs.create(this, repo, parentId = option.id, askParent = false) { refresh() }
         }
         actions += "Renombrar" to { CategoryDialogs.rename(this, repo, option) { refresh() } }
         actions += "Eliminar" to { confirmDelete(option) }

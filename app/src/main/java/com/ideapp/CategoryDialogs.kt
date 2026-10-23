@@ -38,7 +38,7 @@ object CategoryDialogs {
 
         var parentSpinner: Spinner? = null
         val parents = listOf(CategoryOption(0, "Ninguna (categoría principal)", "", null)) +
-            repo.topCategories().map { CategoryOption(it.id, it.name, it.name, null) }
+            repo.categoryOptions()
         if (askParent && parentId == null) {
             layout.addView(TextView(activity).apply {
                 text = "Dentro de:"

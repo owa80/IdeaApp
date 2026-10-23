@@ -9,8 +9,8 @@ enum class ItemType(val label: String, val emoji: String) {
 
 data class Category(val id: Long, val name: String, val parentId: Long?)
 
-/** Una opción de los desplegables: categoría principal o "Categoría › Subcategoría". */
-data class CategoryOption(val id: Long, val label: String, val name: String, val parentId: Long?) {
+/** Una opción de los desplegables: la ruta completa, por ejemplo "Categoría › Subcategoría › Otra". */
+data class CategoryOption(val id: Long, val label: String, val name: String, val parentId: Long?, val depth: Int = 0) {
     override fun toString() = label
 }
 
